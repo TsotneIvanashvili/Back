@@ -1,0 +1,16 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraShop.API", "CameraShop.API\CameraShop.API.csproj", "{B0A1C0D0-1111-2222-3333-444444444444}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B0A1C0D0-1111-2222-3333-444444444444}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0A1C0D0-1111-2222-3333-444444444444}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0A1C0D0-1111-2222-3333-444444444444}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0A1C0D0-1111-2222-3333-444444444444}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
