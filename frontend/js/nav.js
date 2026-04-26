@@ -88,11 +88,36 @@
     `;
   }
 
+  function mountGoUpButton() {
+    let button = document.getElementById("go-up-btn");
+    if (!button) {
+      button = document.createElement("button");
+      button.id = "go-up-btn";
+      button.className = "go-up-btn";
+      button.type = "button";
+      button.textContent = "Go Up";
+      document.body.appendChild(button);
+    }
+
+    const updateVisibility = () => {
+      button.classList.toggle("visible", window.scrollY > 320);
+    };
+
+    button.onclick = () => {
+      if (window.__lenis) window.__lenis.scrollTo(0, { duration: 1 });
+      else window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    window.addEventListener("scroll", updateVisibility, { passive: true });
+    updateVisibility();
+  }
+
   function mount() {
     const header = document.getElementById("site-header");
     const footer = document.getElementById("site-footer");
     if (header) header.innerHTML = navHTML();
     if (footer) footer.innerHTML = footerHTML();
+    mountGoUpButton();
     const nav = header?.querySelector(".nav");
     const navToggle = document.getElementById("nav-toggle");
     const navPanel = document.getElementById("nav-panel");
