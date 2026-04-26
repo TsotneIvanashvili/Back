@@ -2,40 +2,217 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Camera Shop</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CaptureCore — Cameras for people who shoot</title>
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body>
-  <header>
-    <h1>📷 Camera Shop</h1>
-    <div id="auth-area">
-      <span id="user-label" class="hidden"></span>
-      <button id="logout-btn" class="hidden">Logout</button>
-    </div>
-  </header>
+<body data-page="home">
 
-  <main>
-    <section id="login-section">
-      <h2>Login</h2>
-      <form id="login-form">
-        <input name="usernameOrEmail" placeholder="Username or email" required />
-        <input name="password" type="password" placeholder="Password" required />
-        <button type="submit">Login</button>
-      </form>
-      <p class="hint">Try the seeded admin: <code>admin</code> / <code>Admin123!</code></p>
-      <p id="login-error" class="error"></p>
-    </section>
+  <header id="site-header"></header>
 
-    <section id="catalog-section">
-      <h2>Cameras for sale</h2>
-      <p class="hint">
-        This list comes from <code>GET /api/cameras</code> — the public endpoint
-        the JS frontend hits below.
+  <!-- =================== HERO =================== -->
+  <section class="hero">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="8081347-hd_1920_1080_30fps (1).mp4" type="video/mp4" />
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="eyebrow">A camera shop, properly curated</p>
+      <h1>The right glass<br>for the <em>shot you mean</em>.</h1>
+      <p class="hero-sub">
+        From flagship mirrorless bodies to grab-and-go compacts &mdash; every camera
+        in our catalog is one we'd trust on assignment.
       </p>
-      <div id="camera-list" class="grid">Loading…</div>
-    </section>
-  </main>
+      <div class="hero-actions">
+        <a href="products.html" class="btn btn-primary">Shop cameras</a>
+        <a href="#story" class="btn btn-ghost">Our story</a>
+      </div>
+    </div>
+  </section>
 
-  <script src="app.js"></script>
+  <!-- =================== BRAND STRIP =================== -->
+  <div class="container">
+    <div class="brand-strip">
+      <span>CANON</span><span>NIKON</span><span>SONY</span>
+      <span>FUJIFILM</span><span>LEICA</span><span>GOPRO</span>
+    </div>
+  </div>
+
+  <!-- =================== GIGANTIC TYPE SLAB =================== -->
+  <section class="type-slab">
+    <div class="container">
+      <span class="label">Built for use, not unboxing</span>
+      <h2 class="giga">
+        Cameras<br>
+        <em>made for</em><br>
+        <span class="dim">making.</span>
+      </h2>
+      <p class="footnote">
+        We don't review specs &mdash; we run them through real shoots.
+        What earns a spot in our kit earns a spot on this page.
+      </p>
+    </div>
+  </section>
+
+  <!-- =================== SCROLL-DRIVEN VIDEO =================== -->
+  <section class="scroll-video" id="scroll-video">
+    <div class="sticky">
+      <video src="scroll-video.mp4" muted playsinline preload="auto" disablepictureinpicture></video>
+      <div class="veil"></div>
+      <div class="captions">
+        <div class="caption" data-at="0.05" data-span=".15">
+          <p class="eyebrow">Cinema-grade. Pocket-sized.</p>
+          <h2>Built for the <em>way you shoot</em>.</h2>
+          <p>Scroll to play.</p>
+        </div>
+        <div class="caption" data-at="0.45" data-span=".18">
+          <h2>Every frame,<br><em>intentional.</em></h2>
+          <p>Tactile dials. Fast glass. The right body, ready when the moment isn't.</p>
+        </div>
+        <div class="caption" data-at="0.85" data-span=".18">
+          <h2>The kit you'll<br><em>actually carry.</em></h2>
+          <p>Browse the full catalog &mdash; every camera vetted by people who use one daily.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== MOSAIC SHOWCASE =================== -->
+  <section class="mosaic-section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">The catalog</p>
+          <h2>Glass, bodies, and <em>everything</em> between.</h2>
+        </div>
+        <p>Hand-picked across mirrorless, DSLR, compact, and action &mdash; every one in stock and ready to ship.</p>
+      </div>
+      <div class="mosaic" id="mosaic-grid">
+        <div class="loading-cell" style="grid-column:1/-1;"><span class="loader"></span></div>
+      </div>
+      <div style="text-align:center;margin-top:3rem;">
+        <a href="products.html" class="btn btn-ghost">See all cameras &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== BY CATEGORY =================== -->
+  <section class="cat-section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">By category</p>
+          <h2>Find the right tool.</h2>
+        </div>
+        <p>Pick your starting point and we'll show you the cameras worth your time.</p>
+      </div>
+      <div class="cat-grid">
+        <a class="cat-card" href="products.html?cat=Mirrorless">
+          <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=900&q=80" alt="Mirrorless" />
+          <div class="body">
+            <span class="num">i.</span>
+            <h3>Mirrorless</h3>
+            <p>Compact bodies, electronic viewfinders, the fastest autofocus in the business.</p>
+            <span class="arrow">Shop mirrorless &rarr;</span>
+          </div>
+        </a>
+        <a class="cat-card" href="products.html?cat=DSLR">
+          <img src="https://images.unsplash.com/photo-1452780212940-6f5c0d14d848?auto=format&fit=crop&w=900&q=80" alt="DSLR" />
+          <div class="body">
+            <span class="num">ii.</span>
+            <h3>DSLR</h3>
+            <p>Optical viewfinders, all-day battery life, the workhorses pros still trust.</p>
+            <span class="arrow">Shop DSLR &rarr;</span>
+          </div>
+        </a>
+        <a class="cat-card" href="products.html?cat=Compact">
+          <img src="https://images.unsplash.com/photo-1500634245200-e5245c7574ef?auto=format&fit=crop&w=900&q=80" alt="Compact" />
+          <div class="body">
+            <span class="num">iii.</span>
+            <h3>Compact</h3>
+            <p>Large-sensor cameras small enough to live in a jacket pocket.</p>
+            <span class="arrow">Shop compact &rarr;</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== FEATURED THIS SEASON =================== -->
+  <section class="block">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Editor's picks</p>
+          <h2>Featured this season</h2>
+        </div>
+        <p>Three cameras worth pausing for &mdash; chosen by working photographers, not algorithms.</p>
+      </div>
+      <div class="featured-grid" id="featured-grid">
+        <div class="loading-cell"><span class="loader"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== STORY / PILLARS =================== -->
+  <section class="block" id="story" style="background: var(--bg-elev);">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Why CaptureCore</p>
+          <h2>Built for shooters,<br>run by shooters.</h2>
+        </div>
+        <p>We started CaptureCore because gear shopping had become a spec sheet exercise. We wanted a store where the people behind the counter actually use what they sell.</p>
+      </div>
+      <div class="pillars">
+        <div class="pillar">
+          <span class="num">01</span>
+          <h3>Curated, not catalogued</h3>
+          <p>Every camera we list, we've shot with. If it doesn't earn its place in our kit, it doesn't make it onto the site.</p>
+        </div>
+        <div class="pillar">
+          <span class="num">02</span>
+          <h3>Honest stock counts</h3>
+          <p>Nothing pre-orderable, nothing back-ordered indefinitely. If it shows in stock, it ships within 48 hours.</p>
+        </div>
+        <div class="pillar">
+          <span class="num">03</span>
+          <h3>Real support</h3>
+          <p>Every order comes with a direct line to a human who's used the camera you bought. For setup, settings, or tough calls.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== BIG QUOTE =================== -->
+  <section class="quote-block">
+    <div class="container">
+      <blockquote>
+        The best camera is the one you'll actually carry &mdash;
+        but a great one makes <em>you want to.</em>
+      </blockquote>
+      <div class="attribution">&mdash; The CaptureCore <span>Editors</span></div>
+    </div>
+  </section>
+
+  <!-- =================== FINAL CTA =================== -->
+  <section class="cta-block">
+    <div class="container">
+      <h2>Find your <em>next</em> camera.</h2>
+      <p>Ten cameras, hand-picked. Free shipping. Real humans on the other end.</p>
+      <a href="products.html" class="btn btn-primary">Browse the catalog</a>
+    </div>
+  </section>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <!-- Lenis for smooth wheel scrolling -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="js/smooth-scroll.js"></script>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/home.js"></script>
 </body>
 </html>

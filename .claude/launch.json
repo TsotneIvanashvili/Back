@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "frontend",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "5500"],
+      "cwd": "frontend",
+      "port": 5500
+    },
+    {
+      "name": "api",
+      "runtimeExecutable": "dotnet",
+      "runtimeArgs": ["run", "--no-launch-profile", "--urls=http://localhost:5080"],
+      "cwd": "CameraShop.API",
+      "port": 5080
+    }
+  ]
+}

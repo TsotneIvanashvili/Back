@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin &mdash; CaptureCore</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="admin">
+
+  <header id="site-header"></header>
+
+  <section class="page-head">
+    <div class="container">
+      <p class="eyebrow">Admin</p>
+      <h1>Catalog dashboard</h1>
+      <p>Manage cameras, brands, and categories. Changes go live immediately.</p>
+    </div>
+  </section>
+
+  <div class="container" style="padding-top:2rem;padding-bottom:5rem;">
+    <div class="admin-tabs">
+      <button data-tab="cameras"    class="active">Cameras</button>
+      <button data-tab="brands">Brands</button>
+      <button data-tab="categories">Categories</button>
+      <button data-tab="orders">Orders</button>
+    </div>
+
+    <div id="admin-host">
+      <div class="loading-cell"><span class="loader"></span></div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" id="modal-backdrop">
+    <div class="modal" id="modal">
+      <h3 id="modal-title">Edit</h3>
+      <div id="modal-body"></div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost btn-sm" id="modal-cancel">Cancel</button>
+        <button class="btn btn-primary btn-sm" id="modal-save">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

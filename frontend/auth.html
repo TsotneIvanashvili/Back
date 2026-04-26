@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign in &mdash; CaptureCore</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="auth">
+
+  <header id="site-header"></header>
+
+  <div class="auth-shell">
+    <aside class="auth-art">
+      <p class="quote">
+        The best camera is the one you'll actually carry &mdash; but a great one makes you want to.
+        <span class="quote-author">&mdash; CaptureCore</span>
+      </p>
+    </aside>
+
+    <div class="auth-form-wrap">
+      <div class="auth-form">
+        <div class="tabs" role="tablist">
+          <button id="tab-login" class="active" type="button">Sign in</button>
+          <button id="tab-register" type="button">Create account</button>
+        </div>
+
+        <!-- LOGIN -->
+        <form id="login-form">
+          <h1>Welcome back.</h1>
+          <p class="lead">Sign in to track orders and manage your cart.</p>
+
+          <div class="field">
+            <label>Email or username</label>
+            <input name="usernameOrEmail" required autocomplete="username" />
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input name="password" type="password" required autocomplete="current-password" />
+          </div>
+
+          <div id="login-error"></div>
+
+          <button class="btn btn-primary" style="width:100%;margin-top:.5rem;" type="submit">Sign in</button>
+        </form>
+
+        <!-- REGISTER -->
+        <form id="register-form" class="hidden">
+          <h1>Create your account.</h1>
+          <p class="lead">A free CaptureCore account &mdash; no marketing emails, ever.</p>
+
+          <div class="field-row">
+            <div class="field">
+              <label>Username</label>
+              <input name="username" required minlength="3" autocomplete="username" />
+            </div>
+            <div class="field">
+              <label>Email</label>
+              <input name="email" type="email" required autocomplete="email" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Password</label>
+            <input name="password" type="password" required minlength="6" autocomplete="new-password" />
+          </div>
+
+          <div class="field">
+            <label>Full name</label>
+            <input name="fullName" required autocomplete="name" />
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label>Phone</label>
+              <input name="phoneNumber" autocomplete="tel" />
+            </div>
+            <div class="field">
+              <label>City</label>
+              <input name="city" autocomplete="address-level2" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Address</label>
+            <input name="address" autocomplete="street-address" />
+          </div>
+
+          <div class="field">
+            <label>Country</label>
+            <input name="country" autocomplete="country-name" />
+          </div>
+
+          <div id="register-error"></div>
+
+          <button class="btn btn-primary" style="width:100%;margin-top:.5rem;" type="submit">Create account</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/auth-page.js"></script>
+</body>
+</html>

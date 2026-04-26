@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cameras &mdash; CaptureCore</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="products">
+
+  <header id="site-header"></header>
+
+  <section class="page-head">
+    <div class="container">
+      <p class="eyebrow">The catalog</p>
+      <h1>Every camera, ranked by use.</h1>
+      <p>Filter by brand, category, price, or sensor resolution. We list real-world stock in real time.</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="products-layout">
+
+      <!-- FILTERS -->
+      <aside class="filters">
+        <h3>Filter</h3>
+
+        <div class="filter-group">
+          <span class="label">Brand</span>
+          <div class="checks" id="brand-checks">
+            <span style="color:var(--text-faint);font-size:.85rem;">loading&hellip;</span>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <span class="label">Category</span>
+          <div class="checks" id="category-checks">
+            <span style="color:var(--text-faint);font-size:.85rem;">loading&hellip;</span>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <span class="label">Price (USD)</span>
+          <div class="range-inputs">
+            <input type="number" id="price-min" placeholder="Min" min="0" />
+            <span style="color:var(--text-faint);">&mdash;</span>
+            <input type="number" id="price-max" placeholder="Max" min="0" />
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <span class="label">Min megapixels</span>
+          <div class="range-inputs">
+            <input type="number" id="mp-min" placeholder="e.g. 24" min="0" />
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <label style="display:flex;align-items:center;gap:.55rem;font-size:.9rem;color:var(--text-dim);cursor:pointer;">
+            <input type="checkbox" id="instock-only" />
+            In stock only
+          </label>
+        </div>
+
+        <button class="btn btn-ghost btn-sm" id="reset-filters" style="width:100%;">Reset filters</button>
+      </aside>
+
+      <!-- RESULTS -->
+      <div>
+        <div class="toolbar">
+          <span class="count" id="result-count">&hellip;</span>
+          <select id="sort-select">
+            <option value="newest">Sort: Newest</option>
+            <option value="price-asc">Sort: Price (low to high)</option>
+            <option value="price-desc">Sort: Price (high to low)</option>
+            <option value="name">Sort: Name (A-Z)</option>
+          </select>
+        </div>
+
+        <div class="products-grid" id="products-grid">
+          <div class="loading-cell" style="grid-column:1/-1;"><span class="loader"></span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/home.js"></script>
+  <script src="js/products.js"></script>
+</body>
+</html>
