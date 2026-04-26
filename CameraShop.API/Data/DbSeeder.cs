@@ -67,16 +67,14 @@ public static class DbSeeder
             var action     = await db.Categories.FirstAsync(c => c.Name == "Action");
             var compact    = await db.Categories.FirstAsync(c => c.Name == "Compact");
 
-            // Verified Unsplash camera shots — confirmed to load, confirmed to show cameras.
-            // Some are reused intentionally between similar models so every card shows a real camera.
             const string IMG = "?auto=format&fit=crop&w=1200&q=80";
-            const string CAM_DSLR_HAND   = "https://images.unsplash.com/photo-1452780212940-6f5c0d14d848" + IMG; // DSLR in hand
-            const string CAM_SONY_STRAP  = "https://images.unsplash.com/photo-1495707902641-75cac588d2e9" + IMG; // mirrorless w/ strap
-            const string CAM_VINTAGE     = "https://images.unsplash.com/photo-1502920917128-1aa500764cbd" + IMG; // vintage body
-            const string CAM_LEICA_LIKE  = "https://images.unsplash.com/photo-1500634245200-e5245c7574ef" + IMG; // rangefinder
-            const string CAM_SONY_ALPHA  = "https://images.unsplash.com/photo-1516035069371-29a1b244cc32" + IMG; // Sony alpha
-            const string CAM_FUJI_BOXY   = "https://images.unsplash.com/photo-1554080353-a576cf803bda" + IMG;   // Fuji X-style
-            const string CAM_FUJI_X100   = "https://images.unsplash.com/photo-1581591524425-c7e0978865fc" + IMG; // X100 fixed-lens
+            const string CAM_DSLR_HAND   = "https://images.unsplash.com/photo-1452780212940-6f5c0d14d848" + IMG;
+            const string CAM_SONY_STRAP  = "https://images.unsplash.com/photo-1495707902641-75cac588d2e9" + IMG;
+            const string CAM_VINTAGE     = "https://images.unsplash.com/photo-1502920917128-1aa500764cbd" + IMG;
+            const string CAM_LEICA_LIKE  = "https://images.unsplash.com/photo-1500634245200-e5245c7574ef" + IMG;
+            const string CAM_SONY_ALPHA  = "https://images.unsplash.com/photo-1516035069371-29a1b244cc32" + IMG;
+            const string CAM_FUJI_BOXY   = "https://images.unsplash.com/photo-1554080353-a576cf803bda" + IMG;
+            const string CAM_FUJI_X100   = "https://images.unsplash.com/photo-1581591524425-c7e0978865fc" + IMG;
 
             var cameras = new[]
             {

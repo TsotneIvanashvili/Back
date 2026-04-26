@@ -1,6 +1,4 @@
-/* Home page logic.
-   Includes: featured grid, mosaic showcase, scroll-driven video scrubbing,
-   and IntersectionObserver-based caption fade-ins. */
+
 
 (async function () {
   const grid = document.getElementById("featured-grid");
@@ -17,8 +15,6 @@
       </div>`;
     return;
   }
-
-  // --- featured grid (3 picks across price tiers) ---
   if (grid) {
     const sorted = [...cameras].sort((a, b) => a.price - b.price);
     const picks = sorted.length >= 3
@@ -27,10 +23,7 @@
     grid.innerHTML = "";
     picks.forEach((c) => grid.appendChild(productCard(c)));
   }
-
-  // --- mosaic grid (asymmetric, image-led) ---
   if (mosaic) {
-    // Pick up to 7 cameras; assign tile sizes in a fixed pattern that fills the grid neatly
     const selected = cameras.slice(0, 7);
     const sizes = ["feat", "tall", "wide", "square", "huge", "wide", "square"];
     mosaic.innerHTML = "";
@@ -77,12 +70,7 @@ function mosaicTile(c, size) {
   return a;
 }
 
-/* ----------------------------------------------------------
-   Scroll-driven video scrubbing.
-   Tied to a tall container — the video timeline maps 1:1 to
-   the user's scroll progress through the section. We lerp the
-   currentTime each frame so seeks feel smooth instead of snappy.
----------------------------------------------------------- */
+
 (function initScrollVideo() {
   const section = document.getElementById("scroll-video");
   if (!section) return;
@@ -92,23 +80,22 @@ function mosaicTile(c, size) {
   if (!video) return;
 
   const TRIM_END_SECONDS = 1;
-  let target = 0;     // where we want currentTime to be
-  let current = 0;    // where currentTime actually is (lerped)
+  let maxProgress = 1;
+  let target = 0;
+  let current = 0;
   let smoothedProgress = 0;
   let videoDuration = 0;
   let ready = false;
-
-  // Defer until enough metadata loaded
   const onMeta = () => {
-    videoDuration = Math.max(0, (video.duration || 0) - TRIM_END_SECONDS);
+    const fullDuration = video.duration || 0;
+    videoDuration = Math.max(0, fullDuration - TRIM_END_SECONDS);
+    maxProgress = fullDuration > 0 ? videoDuration / fullDuration : 1;
     ready = videoDuration > 0;
     video.pause();
     video.currentTime = 0;
   };
   if (video.readyState >= 1) onMeta();
   else video.addEventListener("loadedmetadata", onMeta);
-
-  // Compute scroll progress through the section [0..1]
   function progress() {
     const rect = section.getBoundingClientRect();
     const scrollable = section.offsetHeight - window.innerHeight;
@@ -130,12 +117,9 @@ function mosaicTile(c, size) {
       cap.classList.toggle("visible", visible);
     });
   }
-
-  // Smooth-seek loop. Reads scroll position every frame so it works whether
-  // the page scrolls natively or via Lenis (which suppresses native scroll events).
   function tick() {
     if (ready) {
-      const rawProgress = progress();
+      const rawProgress = Math.min(progress(), maxProgress);
       smoothedProgress += (rawProgress - smoothedProgress) * 0.08;
 
       const easedProgress = easeInOutCubic(smoothedProgress);
@@ -146,7 +130,7 @@ function mosaicTile(c, size) {
       const delta = Math.abs(current - video.currentTime);
       if (delta > 0.02) {
         try { video.currentTime = current; }
-        catch (_) { /* browsers occasionally reject seek mid-decode */ }
+        catch (_) {  }
       }
     }
     requestAnimationFrame(tick);

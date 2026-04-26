@@ -12,27 +12,17 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// ---------- Configuration ----------
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>()!;
-
-// ---------- Database ----------
 builder.Services.AddDbContext<AppDbContext>(opts =>
     opts.UseSqlite(builder.Configuration.GetConnectionString("Default")));
-
-// ---------- AutoMapper ----------
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
-
-// ---------- DI: Repositories ----------
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICameraRepository, CameraRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
-
-// ---------- DI: Services ----------
 builder.Services.AddScoped<JwtTokenGenerator>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IBrandService, BrandService>();
@@ -40,8 +30,6 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICameraService, CameraService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICartService, CartService>();
-
-// ---------- Authentication & Authorization ----------
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -58,16 +46,12 @@ builder.Services
         };
     });
 builder.Services.AddAuthorization();
-
-// ---------- CORS for the JS frontend ----------
 const string CorsPolicy = "AllowFrontend";
 builder.Services.AddCors(opts =>
     opts.AddPolicy(CorsPolicy, p => p
         .AllowAnyOrigin()
         .AllowAnyHeader()
         .AllowAnyMethod()));
-
-// ---------- API + Swagger ----------
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -88,8 +72,6 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
-
-// ---------- Pipeline ----------
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseSwagger();
@@ -99,8 +81,6 @@ app.UseCors(CorsPolicy);
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-
-// ---------- Seed ----------
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();

@@ -1,4 +1,4 @@
-/* Auth state in localStorage and helpers used across pages. */
+
 
 window.Auth = {
   saveSession(payload) {
@@ -27,7 +27,7 @@ window.Auth = {
     localStorage.removeItem("cc_token");
     localStorage.removeItem("cc_user");
   },
-  /** Redirect to /auth.html if not logged in, optionally requiring Admin. */
+  
   requireLogin(opts = {}) {
     if (!this.isLoggedIn()) {
       const here = encodeURIComponent(location.pathname.split("/").pop() || "");

@@ -123,8 +123,6 @@ public class CartService : ICartService
                 Quantity = i.Quantity
             }).ToList()
         });
-
-        // Cart placed → empty it
         await _carts.ClearAsync(cart);
         await _carts.SaveAsync();
 

@@ -1,4 +1,4 @@
-/* Thin fetch wrapper for the CaptureCore API. */
+
 const API_BASE = "http://localhost:5080/api";
 
 function authHeader() {
@@ -14,8 +14,6 @@ async function request(method, path, body) {
   if (body !== undefined) opts.body = JSON.stringify(body);
 
   const res = await fetch(`${API_BASE}${path}`, opts);
-
-  // Empty body (DELETE often returns 204)
   if (res.status === 204) return null;
 
   let data;
@@ -39,7 +37,7 @@ window.API = {
   BASE: API_BASE
 };
 
-/* Tiny toast helper available everywhere */
+
 window.toast = function (message, type = "info") {
   const node = document.createElement("div");
   node.className = `toast ${type}`;
@@ -48,13 +46,12 @@ window.toast = function (message, type = "info") {
   setTimeout(() => node.remove(), 3500);
 };
 
-/* USD formatter */
+
 window.fmt = {
   money: (n) => `$${Number(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 };
 
-/* Global image fallback — if any <img> fails to load, swap in a placeholder
-   so we never show alt-text squares to the user. */
+
 document.addEventListener("error", (e) => {
   const t = e.target;
   if (t && t.tagName === "IMG" && !t.dataset.fallback) {

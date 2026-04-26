@@ -1,6 +1,4 @@
-/* ==========================================================
-   CaptureCore — dark editorial theme
-   ========================================================== */
+
 
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap");
 
@@ -41,7 +39,7 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Lenis smooth scroll setup — see: lenis.darkroom.engineering */
+
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
@@ -88,7 +86,7 @@ p { margin: 0 0 1em; color: var(--text-dim); }
 
 .hidden { display: none !important; }
 
-/* ---------- Top navigation ---------- */
+
 .site-header {
   position: sticky;
   top: 0;
@@ -225,7 +223,7 @@ p { margin: 0 0 1em; color: var(--text-dim); }
   font-weight: 500;
 }
 
-/* ---------- Buttons ---------- */
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -268,7 +266,7 @@ p { margin: 0 0 1em; color: var(--text-dim); }
 .btn-sm { padding: .55rem 1rem; font-size: .72rem; }
 .btn:disabled { opacity: .4; cursor: not-allowed; }
 
-/* ---------- Hero (home) ---------- */
+
 .hero {
   position: relative;
   height: 92vh;
@@ -318,7 +316,7 @@ p { margin: 0 0 1em; color: var(--text-dim); }
 }
 .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
 
-/* ---------- Sections ---------- */
+
 section.block {
   padding: 6rem 0;
 }
@@ -333,7 +331,7 @@ section.block {
 .section-head h2 { margin: 0; }
 .section-head p { margin: 0; max-width: 480px; }
 
-/* ---------- Featured grid (home) ---------- */
+
 .featured-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -341,7 +339,7 @@ section.block {
 }
 @media (max-width: 900px) { .featured-grid { grid-template-columns: 1fr; } }
 
-/* ---------- Product card ---------- */
+
 .product-card {
   display: flex;
   flex-direction: column;
@@ -408,7 +406,7 @@ section.block {
 .stock.low  { color: var(--accent); }
 .stock.out  { color: var(--danger); }
 
-/* ---------- Brand strip ---------- */
+
 .brand-strip {
   display: flex;
   align-items: center;
@@ -428,7 +426,7 @@ section.block {
 }
 .brand-strip span:hover { color: var(--text-dim); }
 
-/* ---------- Story / value pillars ---------- */
+
 .pillars {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -449,7 +447,7 @@ section.block {
   margin-bottom: .75rem;
 }
 
-/* ---------- Footer ---------- */
+
 .site-footer {
   background: var(--bg-elev);
   border-top: 1px solid var(--border);
@@ -482,9 +480,7 @@ section.block {
   display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
 }
 
-/* ==========================================================
-   Products page
-   ========================================================== */
+
 .page-head {
   padding: 5rem 0 3rem;
   border-bottom: 1px solid var(--border);
@@ -592,9 +588,7 @@ section.block {
   color: var(--text-dim);
 }
 
-/* ==========================================================
-   Product detail page
-   ========================================================== */
+
 .product-detail {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
@@ -702,9 +696,7 @@ section.block {
   border-radius: 999px;
 }
 
-/* ==========================================================
-   Cart page
-   ========================================================== */
+
 .cart-layout {
   display: grid;
   grid-template-columns: 1fr 380px;
@@ -790,9 +782,7 @@ textarea.shipping {
 }
 textarea.shipping:focus { outline: none; border-color: var(--accent); }
 
-/* ==========================================================
-   Auth page
-   ========================================================== */
+
 .auth-shell {
   min-height: calc(100vh - 72px);
   display: grid;
@@ -907,9 +897,7 @@ textarea.shipping:focus { outline: none; border-color: var(--accent); }
 .error-msg { background: rgba(217,119,102,.1); border: 1px solid var(--danger); color: var(--danger); }
 .success-msg { background: rgba(127,166,110,.1); border: 1px solid var(--success); color: var(--success); }
 
-/* ==========================================================
-   Admin dashboard
-   ========================================================== */
+
 .admin-tabs {
   display: flex;
   gap: 1.5rem;
@@ -977,7 +965,7 @@ table.admin-table {
   flex-wrap: wrap;
 }
 
-/* Modal */
+
 .modal-backdrop {
   position: fixed; inset: 0;
   background: rgba(0,0,0,.7);
@@ -1007,7 +995,7 @@ table.admin-table {
   margin-top: 1.5rem;
 }
 
-/* Toast */
+
 .toast {
   position: fixed;
   bottom: 2rem; right: 2rem;
@@ -1025,7 +1013,7 @@ table.admin-table {
 .toast.success { border-left-color: var(--success); }
 @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-/* Loader */
+
 .loader {
   display: inline-block;
   width: 20px; height: 20px;
@@ -1037,11 +1025,9 @@ table.admin-table {
 @keyframes spin { to { transform: rotate(360deg); } }
 .loading-cell { padding: 3rem; text-align: center; color: var(--text-dim); }
 
-/* ==========================================================
-   HOME — extended editorial sections
-   ========================================================== */
 
-/* ---------- Gigantic type slab ---------- */
+
+
 .type-slab {
   padding: 12rem 0 10rem;
   position: relative;
@@ -1081,10 +1067,10 @@ table.admin-table {
   line-height: 1.6;
 }
 
-/* ---------- Scroll-driven video section ---------- */
+
 .scroll-video {
   position: relative;
-  height: 400vh;             /* longer = more scrub time */
+  height: 400vh;             
   background: #000;
 }
 .scroll-video .sticky {
@@ -1153,7 +1139,7 @@ table.admin-table {
   margin: 1rem auto 0;
 }
 
-/* ---------- Mosaic showcase grid ---------- */
+
 .mosaic-section {
   padding: 8rem 0;
 }
@@ -1218,7 +1204,7 @@ table.admin-table {
   margin-top: .25rem;
 }
 
-/* Tile size variants — break the grid up */
+
 .mosaic-tile.feat   { grid-column: span 3; grid-row: span 2; }
 .mosaic-tile.tall   { grid-column: span 2; grid-row: span 2; }
 .mosaic-tile.wide   { grid-column: span 3; grid-row: span 1; }
@@ -1233,7 +1219,7 @@ table.admin-table {
   .mosaic-tile.square { grid-column: span 2; grid-row: span 1; }
 }
 
-/* ---------- By-category triptych ---------- */
+
 .cat-section {
   padding: 8rem 0;
   background: var(--bg-elev);
@@ -1305,7 +1291,7 @@ table.admin-table {
   color: var(--accent);
 }
 
-/* ---------- Big quote section ---------- */
+
 .quote-block {
   padding: 10rem 0;
   position: relative;
@@ -1340,7 +1326,7 @@ table.admin-table {
 }
 .quote-block .attribution span { color: var(--accent); }
 
-/* ---------- Final CTA ---------- */
+
 .cta-block {
   padding: 8rem 0 10rem;
   text-align: center;

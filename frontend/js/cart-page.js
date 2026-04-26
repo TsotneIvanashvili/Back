@@ -1,4 +1,4 @@
-/* Cart page logic — list, edit, remove, checkout. */
+
 
 (async function () {
   if (!Auth.requireLogin()) return;

@@ -1,4 +1,4 @@
-/* Products page — loads cameras, brands, categories, then filters client-side. */
+
 
 (async function () {
   const grid = document.getElementById("products-grid");
@@ -14,8 +14,6 @@
     inStockOnly: false,
     sort: "newest"
   };
-
-  // Pre-select category from URL (?cat=Mirrorless)
   const urlCat = new URLSearchParams(location.search).get("cat");
 
   try {
@@ -45,8 +43,6 @@
     </div>`;
     countEl.textContent = "";
   }
-
-  // ---- filter inputs ----
   const bind = (id, ev, handler) =>
     document.getElementById(id).addEventListener(ev, handler);
 

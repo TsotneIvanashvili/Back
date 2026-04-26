@@ -1,4 +1,4 @@
-/* Product detail page. */
+
 
 (async function () {
   const host = document.getElementById("detail-host");

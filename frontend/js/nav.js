@@ -1,6 +1,4 @@
-/* Renders the shared header + footer and keeps the cart badge in sync.
-   Each page just adds <header id="site-header"></header> and
-   <footer id="site-footer"></footer> and includes this script. */
+
 
 (function () {
   const page = (document.body.dataset.page || "").toLowerCase();
@@ -90,8 +88,6 @@
     const footer = document.getElementById("site-footer");
     if (header) header.innerHTML = navHTML();
     if (footer) footer.innerHTML = footerHTML();
-
-    // user dropdown
     const trigger = document.getElementById("user-menu-trigger");
     if (trigger) {
       const menu = document.getElementById("user-menu");
@@ -124,7 +120,7 @@
       } else {
         badge.classList.add("hidden");
       }
-    } catch (_) { /* ignore for unauth/anon */ }
+    } catch (_) {  }
   }
 
   window.Nav = { mount, refreshCartBadge };

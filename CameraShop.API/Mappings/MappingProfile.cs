@@ -12,15 +12,10 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        // Brand
         CreateMap<Brand, BrandDto>();
         CreateMap<BrandUpsertDto, Brand>();
-
-        // Category
         CreateMap<Category, CategoryDto>();
         CreateMap<CategoryUpsertDto, Category>();
-
-        // Camera
         CreateMap<Camera, CameraDto>()
             .ForMember(d => d.BrandName, o => o.MapFrom(s => s.Brand.Name))
             .ForMember(d => d.Categories,
@@ -28,16 +23,12 @@ public class MappingProfile : Profile
 
         CreateMap<CameraUpsertDto, Camera>()
             .ForMember(d => d.CameraCategories, o => o.Ignore());
-
-        // Order
         CreateMap<OrderItem, OrderItemDto>()
             .ForMember(d => d.CameraModel, o => o.MapFrom(s => s.Camera.Model));
 
         CreateMap<Order, OrderDto>()
             .ForMember(d => d.Username, o => o.MapFrom(s => s.User.Username))
             .ForMember(d => d.Items, o => o.MapFrom(s => s.Items));
-
-        // Cart
         CreateMap<CartItem, CartItemDto>()
             .ForMember(d => d.CameraModel, o => o.MapFrom(s => s.Camera.Model))
             .ForMember(d => d.ImageUrl, o => o.MapFrom(s => s.Camera.ImageUrl))

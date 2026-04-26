@@ -28,8 +28,6 @@ class RangeHandler(SimpleHTTPRequestHandler):
         rng = self.headers.get("Range")
         if not rng:
             return super().do_GET()
-
-        # parse "bytes=START-END" (END is optional)
         try:
             unit, _, spec = rng.partition("=")
             if unit.strip().lower() != "bytes":

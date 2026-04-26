@@ -1,4 +1,4 @@
-/* Admin dashboard — CRUD for cameras, brands, categories; read-only orders. */
+
 
 (async function () {
   if (!Auth.requireLogin({ adminOnly: true })) return;
@@ -31,8 +31,6 @@
       host.innerHTML = `<div class="empty"><h3>${err.message || "Error"}</h3></div>`;
     }
   }
-
-  // ---------- CAMERAS ----------
   async function renderCameras() {
     await ensureLookups();
     const cameras = await API.get("/cameras");
@@ -133,8 +131,6 @@
       }
     });
   }
-
-  // ---------- BRANDS ----------
   async function renderBrands() {
     const brands = await API.get("/brands");
     brandsCache = brands;
@@ -192,8 +188,6 @@
       } catch (err) { toast(err.message, "error"); }
     });
   }
-
-  // ---------- CATEGORIES ----------
   async function renderCategories() {
     const cats = await API.get("/categories");
     categoriesCache = cats;
@@ -248,8 +242,6 @@
       } catch (err) { toast(err.message, "error"); }
     });
   }
-
-  // ---------- ORDERS ----------
   async function renderOrders() {
     const orders = await API.get("/orders");
     host.innerHTML = `
@@ -272,8 +264,6 @@
         </table>
       </div>`;
   }
-
-  // ---------- Modal ----------
   function openModal(title, bodyHtml, onSave) {
     document.getElementById("modal-title").textContent = title;
     document.getElementById("modal-body").innerHTML = bodyHtml;

@@ -1,4 +1,4 @@
-/* Login + register form logic. */
+
 
 (function () {
   const tabLogin    = document.getElementById("tab-login");
@@ -7,8 +7,6 @@
   const registerForm = document.getElementById("register-form");
   const loginError    = document.getElementById("login-error");
   const registerError = document.getElementById("register-error");
-
-  // Pre-pick the right tab via ?mode=register
   const mode = new URLSearchParams(location.search).get("mode");
   if (mode === "register") show("register");
 
@@ -67,7 +65,6 @@
       Auth.saveSession(res);
       location.href = nextDest();
     } catch (e2) {
-      // Validation errors come back as { errors: { field: [msg] } }
       let msg = e2.message || "Could not create account.";
       if (e2.payload && e2.payload.errors) {
         msg = Object.values(e2.payload.errors).flat().join(" ");
