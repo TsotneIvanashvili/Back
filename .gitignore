@@ -487,3 +487,10 @@ $RECYCLE.BIN/
 *.db
 *.db-shm
 *.db-wal
+
+# Frontend media kept out of git
+frontend/*.mp4
+frontend/*.webm
+frontend/*.mov
+frontend/*.m4v
+frontend/*.ogg

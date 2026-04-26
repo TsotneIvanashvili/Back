@@ -18,7 +18,15 @@
       "Bash(taskkill //F //PID 11916)",
       "Bash(taskkill //F //IM CameraShop.API.exe)",
       "mcp__Claude_Preview__preview_start",
-      "Bash(taskkill //F //IM python.exe)"
+      "Bash(taskkill //F //IM python.exe)",
+      "Bash(where npx *)",
+      "Bash(netstat -ano)",
+      "Bash(tasklist //FI \"PID eq 21564\")",
+      "Bash(powershell -Command \"Get-Process -Id 21564 | Select-Object Id, ProcessName, Path\")",
+      "Bash(python serve.py 5510)",
+      "Bash(powershell -Command \"Get-Process -Id 21564 -ErrorAction SilentlyContinue | Select-Object Id, ProcessName\")",
+      "Bash(powershell -Command \"Get-NetTCPConnection -LocalPort 5500 -ErrorAction SilentlyContinue | Select-Object LocalAddress, State, OwningProcess | Sort-Object -Unique\")",
+      "Bash(powershell -Command \"Stop-Process -Id 21564 -Force -ErrorAction SilentlyContinue; Start-Sleep -Seconds 1; netstat -ano | Select-String ':5500\\\\s.*LISTEN' | Select-Object -First 3\")"
     ]
   }
 }

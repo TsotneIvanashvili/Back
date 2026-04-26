@@ -4,9 +4,9 @@
     {
       "name": "frontend",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "5500"],
+      "runtimeArgs": ["serve.py", "5510"],
       "cwd": "frontend",
-      "port": 5500
+      "port": 5510
     },
     {
       "name": "api",

@@ -91,15 +91,16 @@ function mosaicTile(c, size) {
   const captions = Array.from(section.querySelectorAll(".caption"));
   if (!video) return;
 
+  const TRIM_END_SECONDS = 1;
   let target = 0;     // where we want currentTime to be
   let current = 0;    // where currentTime actually is (lerped)
+  let smoothedProgress = 0;
   let videoDuration = 0;
   let ready = false;
-  let lastSeek = 0;
 
   // Defer until enough metadata loaded
   const onMeta = () => {
-    videoDuration = video.duration || 0;
+    videoDuration = Math.max(0, (video.duration || 0) - TRIM_END_SECONDS);
     ready = videoDuration > 0;
     video.pause();
     video.currentTime = 0;
@@ -115,6 +116,12 @@ function mosaicTile(c, size) {
     return Math.max(0, Math.min(1, scrolled / scrollable));
   }
 
+  function easeInOutCubic(t) {
+    return t < 0.5
+      ? 4 * t * t * t
+      : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+
   function updateCaptions(p) {
     captions.forEach((cap) => {
       const at = parseFloat(cap.dataset.at);
@@ -128,13 +135,16 @@ function mosaicTile(c, size) {
   // the page scrolls natively or via Lenis (which suppresses native scroll events).
   function tick() {
     if (ready) {
-      const p = progress();
-      target = p * videoDuration;
-      updateCaptions(p);
+      const rawProgress = progress();
+      smoothedProgress += (rawProgress - smoothedProgress) * 0.08;
 
-      current += (target - current) * 0.15;
+      const easedProgress = easeInOutCubic(smoothedProgress);
+      target = easedProgress * videoDuration;
+      updateCaptions(smoothedProgress);
+
+      current += (target - current) * 0.08;
       const delta = Math.abs(current - video.currentTime);
-      if (delta > 0.04) {
+      if (delta > 0.02) {
         try { video.currentTime = current; }
         catch (_) { /* browsers occasionally reject seek mid-decode */ }
       }
