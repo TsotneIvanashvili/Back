@@ -15,6 +15,8 @@ public class AppDbContext : DbContext
     public DbSet<CameraCategory> CameraCategories => Set<CameraCategory>();
     public DbSet<Order> Orders => Set<Order>();
     public DbSet<OrderItem> OrderItems => Set<OrderItem>();
+    public DbSet<Cart> Carts => Set<Cart>();
+    public DbSet<CartItem> CartItems => Set<CartItem>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -97,5 +99,31 @@ public class AppDbContext : DbContext
             .WithMany(c => c.OrderItems)
             .HasForeignKey(oi => oi.CameraId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        // ---- One-to-One: User <-> Cart ----
+        modelBuilder.Entity<User>()
+            .HasOne(u => u.Cart)
+            .WithOne(c => c.User)
+            .HasForeignKey<Cart>(c => c.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // ---- One-to-Many: Cart -> CartItems ----
+        modelBuilder.Entity<Cart>()
+            .HasMany(c => c.Items)
+            .WithOne(i => i.Cart)
+            .HasForeignKey(i => i.CartId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // CartItem -> Camera (don't allow deleting a camera that's in someone's cart)
+        modelBuilder.Entity<CartItem>()
+            .HasOne(i => i.Camera)
+            .WithMany()
+            .HasForeignKey(i => i.CameraId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // One row per (cart, camera) — prevents duplicate lines
+        modelBuilder.Entity<CartItem>()
+            .HasIndex(i => new { i.CartId, i.CameraId })
+            .IsUnique();
     }
 }

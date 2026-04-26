@@ -14,4 +14,7 @@ public class User
 
     // One-to-many: a User can have many Orders
     public ICollection<Order> Orders { get; set; } = new List<Order>();
+
+    // One-to-one: a User has one Cart
+    public Cart? Cart { get; set; }
 }

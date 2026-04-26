@@ -1,6 +1,7 @@
 using AutoMapper;
 using CameraShop.API.DTOs.Brand;
 using CameraShop.API.DTOs.Camera;
+using CameraShop.API.DTOs.Cart;
 using CameraShop.API.DTOs.Category;
 using CameraShop.API.DTOs.Order;
 using CameraShop.API.Models;
@@ -34,6 +35,15 @@ public class MappingProfile : Profile
 
         CreateMap<Order, OrderDto>()
             .ForMember(d => d.Username, o => o.MapFrom(s => s.User.Username))
+            .ForMember(d => d.Items, o => o.MapFrom(s => s.Items));
+
+        // Cart
+        CreateMap<CartItem, CartItemDto>()
+            .ForMember(d => d.CameraModel, o => o.MapFrom(s => s.Camera.Model))
+            .ForMember(d => d.ImageUrl, o => o.MapFrom(s => s.Camera.ImageUrl))
+            .ForMember(d => d.UnitPrice, o => o.MapFrom(s => s.Camera.Price));
+
+        CreateMap<Cart, CartDto>()
             .ForMember(d => d.Items, o => o.MapFrom(s => s.Items));
     }
 }
