@@ -79,17 +79,13 @@ function mosaicTile(c, size) {
   const captions = Array.from(section.querySelectorAll(".caption"));
   if (!video) return;
 
-  const TRIM_END_SECONDS = 1;
-  let maxProgress = 1;
   let target = 0;
   let current = 0;
   let smoothedProgress = 0;
   let videoDuration = 0;
   let ready = false;
   const onMeta = () => {
-    const fullDuration = video.duration || 0;
-    videoDuration = Math.max(0, fullDuration - TRIM_END_SECONDS);
-    maxProgress = fullDuration > 0 ? videoDuration / fullDuration : 1;
+    videoDuration = video.duration || 0;
     ready = videoDuration > 0;
     video.pause();
     video.currentTime = 0;
@@ -119,7 +115,7 @@ function mosaicTile(c, size) {
   }
   function tick() {
     if (ready) {
-      const rawProgress = Math.min(progress(), maxProgress);
+      const rawProgress = progress();
       smoothedProgress += (rawProgress - smoothedProgress) * 0.08;
 
       const easedProgress = easeInOutCubic(smoothedProgress);

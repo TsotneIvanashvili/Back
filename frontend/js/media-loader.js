@@ -4,7 +4,6 @@
     {
       key: "heroVideo",
       selector: ".hero-video",
-      sourceSelector: "source",
       fallback: "8081347-hd_1920_1080_30fps (1).mp4"
     },
     {
@@ -14,20 +13,20 @@
     }
   ];
 
-  mediaMap.forEach(({ key, selector, sourceSelector, fallback }) => {
+  mediaMap.forEach(({ key, selector, fallback }) => {
     const video = document.querySelector(selector);
     if (!video) return;
 
     const nextSrc = sources[key] || fallback;
     if (!nextSrc) return;
 
-    if (sourceSelector) {
-      const source = video.querySelector(sourceSelector);
-      if (source) source.src = nextSrc;
-    } else {
-      video.src = nextSrc;
-    }
-
+    video.src = nextSrc;
     video.load();
+
+    if (video.hasAttribute("autoplay")) {
+      const tryPlay = () => video.play().catch(() => {});
+      if (video.readyState >= 2) tryPlay();
+      else video.addEventListener("loadeddata", tryPlay, { once: true });
+    }
   });
 })();
