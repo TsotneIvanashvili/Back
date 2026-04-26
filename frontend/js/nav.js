@@ -24,15 +24,20 @@
     return `
       <nav class="nav">
         <a href="index.html" class="brand">Capture<span>Core</span></a>
-        <ul class="nav-links">
-          ${link("index.html", "Home", "home")}
-          ${link("products.html", "Cameras", "products")}
-        </ul>
-        <div class="nav-actions">
-          <a href="cart.html" class="cart-btn" aria-label="Cart">
-            Cart <span class="cart-badge hidden" id="cart-badge">0</span>
-          </a>
-          ${userBlock}
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-panel">
+          Menu
+        </button>
+        <div class="nav-panel" id="nav-panel">
+          <ul class="nav-links">
+            ${link("index.html", "Home", "home")}
+            ${link("products.html", "Cameras", "products")}
+          </ul>
+          <div class="nav-actions">
+            <a href="cart.html" class="cart-btn" aria-label="Cart">
+              Cart <span class="cart-badge hidden" id="cart-badge">0</span>
+            </a>
+            ${userBlock}
+          </div>
         </div>
       </nav>
     `;
@@ -88,7 +93,23 @@
     const footer = document.getElementById("site-footer");
     if (header) header.innerHTML = navHTML();
     if (footer) footer.innerHTML = footerHTML();
+    const nav = header?.querySelector(".nav");
+    const navToggle = document.getElementById("nav-toggle");
+    const navPanel = document.getElementById("nav-panel");
     const trigger = document.getElementById("user-menu-trigger");
+    if (navToggle && nav && navPanel) {
+      navToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const isOpen = nav.classList.toggle("open");
+        navToggle.setAttribute("aria-expanded", String(isOpen));
+      });
+      navPanel.querySelectorAll("a").forEach((el) =>
+        el.addEventListener("click", () => {
+          nav.classList.remove("open");
+          navToggle.setAttribute("aria-expanded", "false");
+        })
+      );
+    }
     if (trigger) {
       const menu = document.getElementById("user-menu");
       trigger.addEventListener("click", (e) => {
@@ -97,6 +118,12 @@
       });
       document.addEventListener("click", () => menu.classList.remove("open"));
     }
+    document.addEventListener("click", (e) => {
+      if (!nav || !navToggle || !nav.classList.contains("open")) return;
+      if (nav.contains(e.target)) return;
+      nav.classList.remove("open");
+      navToggle.setAttribute("aria-expanded", "false");
+    });
     const logoutBtn = document.getElementById("logout-btn");
     if (logoutBtn) {
       logoutBtn.addEventListener("click", () => {
