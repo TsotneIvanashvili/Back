@@ -26,7 +26,15 @@
       "Bash(python serve.py 5510)",
       "Bash(powershell -Command \"Get-Process -Id 21564 -ErrorAction SilentlyContinue | Select-Object Id, ProcessName\")",
       "Bash(powershell -Command \"Get-NetTCPConnection -LocalPort 5500 -ErrorAction SilentlyContinue | Select-Object LocalAddress, State, OwningProcess | Sort-Object -Unique\")",
-      "Bash(powershell -Command \"Stop-Process -Id 21564 -Force -ErrorAction SilentlyContinue; Start-Sleep -Seconds 1; netstat -ano | Select-String ':5500\\\\s.*LISTEN' | Select-Object -First 3\")"
+      "Bash(powershell -Command \"Stop-Process -Id 21564 -Force -ErrorAction SilentlyContinue; Start-Sleep -Seconds 1; netstat -ano | Select-String ':5500\\\\s.*LISTEN' | Select-Object -First 3\")",
+      "Bash(git rm *)",
+      "Bash(rm -f README.md global.json)",
+      "Bash(git checkout *)",
+      "Bash(git reset *)",
+      "Bash(powershell -Command \"Get-Process -Id 12340 -ErrorAction SilentlyContinue | Select-Object Id, ProcessName\")",
+      "Read(//tmp/**)",
+      "Bash(taskkill //F //PID 23808)",
+      "Bash(powershell -Command \"Get-Process -Name 'CameraShop.API','dotnet' -ErrorAction SilentlyContinue | Select-Object Id, ProcessName\")"
     ]
   }
 }

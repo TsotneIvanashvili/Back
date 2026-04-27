@@ -1128,7 +1128,9 @@ table.admin-table {
 
 .scroll-video {
   position: relative;
-  height: 400vh;             
+  /* Section height controls scrub rate. Too tall = sub-pixel scroll deltas =
+     useless seeks; too short = jumpy. ~250vh feels right for short clips. */
+  height: 250vh;
   background: #000;
 }
 .scroll-video .sticky {

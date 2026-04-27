@@ -71,65 +71,125 @@ function mosaicTile(c, size) {
 }
 
 
+/* ----------------------------------------------------------
+   Scroll-driven video scrubbing.
+
+   The hard parts of doing this without it feeling rude:
+
+   1) NEVER queue a new seek while video.seeking === true.
+      Browsers don't queue currentTime writes — a new seek cancels
+      the in-flight one, so during fast scroll only the very last
+      seek finishes and you appear to "jump 50 frames".
+
+   2) Only seek when the delta is bigger than ~one frame.
+      Seeking 60×/sec for sub-frame deltas thrashes the decoder
+      and produces visible chop.
+
+   3) Pre-warm the decoder (play→pause once) so the first scroll
+      into the section doesn't have to cold-boot the codec.
+
+   4) Ease the *progress*, not just the seek target. Linear progress
+      makes entering and leaving the section feel like a slap.
+
+   5) Stop ticking when the section is off-screen — saves the CPU
+      from hammering an invisible element.
+---------------------------------------------------------- */
 (function initScrollVideo() {
   const section = document.getElementById("scroll-video");
   if (!section) return;
-
   const video = section.querySelector("video");
-  const captions = Array.from(section.querySelectorAll(".caption"));
   if (!video) return;
 
-  let target = 0;
-  let current = 0;
-  let smoothedProgress = 0;
-  let videoDuration = 0;
-  let ready = false;
-  const onMeta = () => {
-    videoDuration = video.duration || 0;
-    ready = videoDuration > 0;
-    video.pause();
-    video.currentTime = 0;
-  };
-  if (video.readyState >= 1) onMeta();
-  else video.addEventListener("loadedmetadata", onMeta);
-  function progress() {
+  const captions = Array.from(section.querySelectorAll(".caption"));
+
+  // ---- tunables -----------------------------------------------------------
+  // Lenis already smooths the wheel input, so we don't need a heavy lerp on
+  // top — that would cause sluggish double-smoothing. Just enough to take
+  // the edge off the per-frame jitter introduced by seek granularity.
+  const SMOOTHING = 0.18;   // lerp factor per frame; lower = silkier, laggier
+  const SEEK_EPS  = 0.04;   // seconds; ~1 frame at 30fps. Below this we skip.
+  // Soft "ease in/out" — `Sine` curve. Much gentler than cubic, avoids the
+  // mid-scroll "rush" while still softening the very first/last few percent.
+  const EASE = (t) => 0.5 - Math.cos(Math.PI * t) / 2;
+  // -------------------------------------------------------------------------
+
+  let smoothedTime = 0;
+  let isInView    = false;
+  let videoReady  = false;
+
+  function getProgress() {
     const rect = section.getBoundingClientRect();
     const scrollable = section.offsetHeight - window.innerHeight;
-    const scrolled = -rect.top;
-    return Math.max(0, Math.min(1, scrolled / scrollable));
-  }
-
-  function easeInOutCubic(t) {
-    return t < 0.5
-      ? 4 * t * t * t
-      : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    if (scrollable <= 0) return 0;
+    const raw = Math.max(0, Math.min(1, -rect.top / scrollable));
+    return EASE(raw);
   }
 
   function updateCaptions(p) {
-    captions.forEach((cap) => {
-      const at = parseFloat(cap.dataset.at);
+    for (const cap of captions) {
+      const at   = parseFloat(cap.dataset.at);
       const span = parseFloat(cap.dataset.span || ".18");
-      const visible = p >= (at - span) && p <= (at + span);
-      cap.classList.toggle("visible", visible);
-    });
-  }
-  function tick() {
-    if (ready) {
-      const rawProgress = progress();
-      smoothedProgress += (rawProgress - smoothedProgress) * 0.08;
-
-      const easedProgress = easeInOutCubic(smoothedProgress);
-      target = easedProgress * videoDuration;
-      updateCaptions(smoothedProgress);
-
-      current += (target - current) * 0.08;
-      const delta = Math.abs(current - video.currentTime);
-      if (delta > 0.02) {
-        try { video.currentTime = current; }
-        catch (_) {  }
-      }
+      cap.classList.toggle("visible", p >= (at - span) && p <= (at + span));
     }
+  }
+
+  // Pre-warm the decoder: kicking off play() and immediately pausing
+  // forces the browser to allocate decoder buffers so the first real
+  // seek is fast instead of stalling for half a second.
+  function prewarm() {
+    if (!video.paused) return;
+    video.muted = true;
+    const p = video.play();
+    if (p && typeof p.then === "function") {
+      p.then(() => { video.pause(); video.currentTime = 0; }).catch(() => {});
+    }
+  }
+
+  function onReady() {
+    if (videoReady) return;
+    videoReady = video.duration > 0;
+    if (videoReady) prewarm();
+  }
+
+  if (video.readyState >= 2) onReady();
+  video.addEventListener("loadedmetadata", onReady);
+  video.addEventListener("canplay", onReady);
+
+  // Pause the rAF cost when section isn't visible.
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(
+      ([entry]) => { isInView = entry.isIntersecting; },
+      { rootMargin: "200px 0px" }       // start a bit before section enters
+    ).observe(section);
+  } else {
+    isInView = true;
+  }
+
+  function tick() {
     requestAnimationFrame(tick);
+
+    if (!videoReady || !isInView) return;
+
+    const target = getProgress() * video.duration;
+    updateCaptions(getProgress());
+
+    // Exponential damping toward the target — smooths jitter.
+    smoothedTime += (target - smoothedTime) * SMOOTHING;
+
+    // CRITICAL: don't issue another seek while the previous one is still
+    // in flight. Stacking seeks is what makes the video appear to jump.
+    if (video.seeking) return;
+
+    const delta = Math.abs(smoothedTime - video.currentTime);
+    if (delta < SEEK_EPS) return;             // skip imperceptible seeks
+
+    // Clamp to the seekable range the browser actually has buffered,
+    // so we never request a frame that isn't there yet.
+    const seekEnd = video.seekable.length
+      ? video.seekable.end(0)
+      : video.duration;
+    const safe = Math.max(0, Math.min(seekEnd - 0.05, smoothedTime));
+    try { video.currentTime = safe; } catch (_) { /* mid-decode race */ }
   }
 
   requestAnimationFrame(tick);
